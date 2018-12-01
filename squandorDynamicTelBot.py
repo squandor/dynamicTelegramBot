@@ -160,7 +160,7 @@ def handle(msg):
    markup_main = ReplyKeyboardMarkup(keyboard=[['Car']],one_time_keyboard=False)
    markup_car = ReplyKeyboardMarkup(keyboard=[['Get location'], ['Back']], one_time_keyboard=False)
 
-   unames = ['squandor', 'domsanbot', 'larissaschins', 'larissa s']
+   unames = ['', ''] ## usernames which can use the bot in telegram
    url = 'http://192.168.1.31:8080'
    telbotApi = '192.168.1.56'
    run = False
