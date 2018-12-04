@@ -128,7 +128,9 @@ def on_callback_query(msg):
     elif query_data.lower().split(' ')[0] == '/suggestion':
         _utility = getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result']
         _utilityTypes = sorted(Counter(x['SubType'].lower() for x in _utility if 'SubType' in x)) + sorted(Counter(x['Type'].lower() for x in _utility if 'Type' in x))
-        if query_data.lower().split(' ')[2] == 'switch':
+        _switches = getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result']
+        _switchTypes = sorted(Counter(x['SubType'].lower() for x in _switches if 'SubType' in x)) + sorted(Counter(x['Type'].lower() for x in _switches if 'Type' in x)) 
+        if query_data.lower().split(' ')[2] in _switchTypes:
             _callbackCommand = '/switch ' + query_data.lower().split(' ')[1]+ ' '
             markup_dyn = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='On', callback_data=_callbackCommand + 'on'), InlineKeyboardButton(text='Off', callback_data=_callbackCommand + 'off')],
