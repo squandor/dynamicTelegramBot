@@ -228,7 +228,7 @@ def handle(msg):
 bot = telepot.Bot(bot_token)
 MessageLoop(bot, {'chat': handle,
                   'callback_query': on_callback_query}).run_as_thread()
-print 'I am listening...'
+print('I am listening...')
 
 while 1:
     time.sleep(10)
