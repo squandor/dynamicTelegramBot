@@ -155,6 +155,7 @@ def on_callback_query(msg):
 
 
 def handle(msg):
+   global url, unames, car_location_idx
    chat_id = msg['chat']['id']
    command = msg['text']
    user = msg['from']['username']
