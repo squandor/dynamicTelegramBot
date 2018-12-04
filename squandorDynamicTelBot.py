@@ -15,10 +15,13 @@ from telepot.loop import MessageLoop
 from telepot.namedtuple import ReplyKeyboardMarkup
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from collections import Counter
+
+########### Config ###############
 url = 'http://<domoticz_ip>:8080'
 bot_token = '<botToken>'
+unames = ['', ''] ## usernames which can use the bot in telegram
 car_location_idx = '111' #lat,long
-
+##################################
 def getRandom():
    return randint(0, 9)
 
@@ -125,8 +128,6 @@ def on_callback_query(msg):
     elif query_data.lower().split(' ')[0] == '/suggestion':
         _utility = getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result']
         _utilityTypes = sorted(Counter(x['SubType'].lower() for x in _utility if 'SubType' in x)) + sorted(Counter(x['Type'].lower() for x in _utility if 'Type' in x))
-        print _utilityTypes
-        print query_data.lower().split(' ')[2]
         if query_data.lower().split(' ')[2] == 'switch':
             _callbackCommand = '/switch ' + query_data.lower().split(' ')[1]+ ' '
             markup_dyn = InlineKeyboardMarkup(inline_keyboard=[
@@ -159,8 +160,6 @@ def handle(msg):
    user = msg['from']['username']
    markup_main = ReplyKeyboardMarkup(keyboard=[['Car']],one_time_keyboard=False)
    markup_car = ReplyKeyboardMarkup(keyboard=[['Get location'], ['Back']], one_time_keyboard=False)
-
-   unames = ['', ''] ## usernames which can use the bot in telegram
    run = False
    if user.lower() in unames:
        if command.lower() != '/start':
@@ -221,7 +220,6 @@ def handle(msg):
                        bot.sendMessage(chat_id, 'Kon het apparaat niet vinden bedoelde je soms een van de onderstaande?', reply_markup=markup_dyn)
                    else:
                        bot.sendMessage(chat_id, 'Kon het apparaat niet vinden')
-       print command.lower()
        if run:
            getDomoticzUrl(url)
 
