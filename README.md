@@ -22,4 +22,4 @@ If you type livingroomspeaker to the bot it will come with the switch and asks y
 but if you type living the bot will make an suggestions and asks if you meant one of the following devices and comes with livingroomSpeaker and livingroomLights. 
 
 Examples:
-![alt text](https://github.com/squandor/dynamicTelegramBot/master/examples/suggestions.png)
+![alt text](https://github.com/squandor/dynamicTelegramBot/blob/master/examples/suggestions.png?raw=true)
