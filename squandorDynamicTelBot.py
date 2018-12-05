@@ -126,8 +126,7 @@ def on_callback_query(msg):
             bot_text = 'Commando uitgevoert'
         else:
             bot_text = 'Er ging iets mis met het uitvoeren: ' + runUrl
-
-        bot.answerCallbackQuery(msg['chat']['id'], text=_res['result']['Data'])
+        bot.answerCallbackQuery(query_id, text=_res['result'][0]['Data'])
     elif query_data.lower().split(' ')[0] == '/suggestion':
         print(query_data.lower().split(' ')[2])
         _utility = getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result']
