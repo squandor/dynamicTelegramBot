@@ -1,5 +1,5 @@
 # dynamicTelegramBot
-dynamic telegram bot for domoticz written in Python 2.7
+dynamic telegram bot for domoticz written in Python 3
 
 You can use it by installing telepot using: pip install telepot
 
