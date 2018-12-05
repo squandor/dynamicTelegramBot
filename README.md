@@ -2,11 +2,11 @@
 dynamic telegram bot for domoticz written in Python 3
 You can use it by installing telepot using: pip install telepot
 
-To secure the bot there you must place usernames in the array unames on line 163:
+To secure the bot you must place usernames in the array unames:
 unames = ['username1', 'username2'] 
-
 by using this the bot will only react to the users which are in the array.
 
+# What can it do?
 Using this bot you can ask him for an switch/scene/group/utility switch. 
 After the bot found the device it will ask you what you want to do with it (on,off)
 
@@ -20,7 +20,7 @@ If you type livingroomspeaker to the bot it will come with the switch and asks y
 
 but if you type living the bot will make an suggestions and asks if you meant one of the following devices and comes with livingroomSpeaker and livingroomLights. 
 
-Examples:<br>
+# Examples:<br>
 Switch<br>
 ![alt text](https://github.com/squandor/dynamicTelegramBot/blob/master/examples/example_switch.png?raw=true)
 
