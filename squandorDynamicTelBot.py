@@ -124,8 +124,9 @@ def on_callback_query(msg):
         else:
             bot_text = 'Er ging iets mis met het uitvoeren: ' + runUrl
 
-        bot.answerCallbackQuery(msg['chat']['id'], text=_res['result']['Data'])
+        bot.answerCallbackQuery(query_id, text=_res['result'][0]['Data'])
     elif query_data.lower().split(' ')[0] == '/suggestion':
+        markup_dyn = None
         _utility = getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result']
         _utilityTypes = sorted(Counter(x['SubType'].lower() for x in _utility if 'SubType' in x)) + sorted(Counter(x['Type'].lower() for x in _utility if 'Type' in x))
         _switches = getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result']
