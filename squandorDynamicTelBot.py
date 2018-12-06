@@ -127,6 +127,7 @@ def on_callback_query(msg):
         bot.answerCallbackQuery(query_id, text=_res['result'][0]['Data'])
     elif query_data.lower().split(' ')[0] == '/suggestion':
         markup_dyn = None
+        _many = False
         _utility = getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result']
         _utilityTypes = sorted(Counter(x['SubType'].lower() for x in _utility if 'SubType' in x)) + sorted(Counter(x['Type'].lower() for x in _utility if 'Type' in x))
         _switches = getDomoticzUrl(url + '/json.htm?type=devices&filter=switch&used=true')['result']
@@ -153,6 +154,8 @@ def on_callback_query(msg):
                 )
 
             markup_dyn = InlineKeyboardMarkup(inline_keyboard=[_arr])
+            if len(_arr) > 3:
+                _many = True
         _name, _state = getNameByIDX({'idx': query_data.lower().split(' ')[1], 'type': query_data.lower().split(' ')[2]}, getDomoticzUrl(url + '/json.htm?type=devices&filter=light&used=true')['result'] + getDomoticzUrl(url + '/json.htm?type=scenes')['result'] + getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result'])
         bot.sendMessage(int(query_data.split(' ')[3]), 'The ' + query_data.lower().split(' ')[2].title() + ' ' + _name + ' is currently  ' + _state + '. What do you want to do?')
         if _many:
