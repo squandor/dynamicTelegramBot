@@ -35,12 +35,12 @@ User=<username>
 ExecStart=/usr/bin/python /home/<username>/scripts/telegram/dynamicTelegramBot/squandorDynamicTelBot.py
 [Install]
 WantedBy=multi-user.target
-
-"sudo chmod 655 /etc/systemd/system/messagebot.service"
-"sudo systemctl daemon-reload"
-"sudo systemctl enable messagebot.service"
-"sudo systemctl start messagebot.service"
-"sudo systemctl status messagebot.service"
+<br>
+"sudo chmod 655 /etc/systemd/system/messagebot.service"<br>
+"sudo systemctl daemon-reload"<br>
+"sudo systemctl enable messagebot.service"<br>
+"sudo systemctl start messagebot.service"<br>
+"sudo systemctl status messagebot.service"<br>
 
 # Examples:<br>
 Switch<br>
