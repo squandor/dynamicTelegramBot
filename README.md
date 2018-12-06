@@ -27,14 +27,14 @@ You can use it using the following steps
 Copy code to /etc/systemd/system/messagebot.service
 Edit the values in the example script:
 
-[Unit]
-Description=Telegram Bot for Domoticz After=multi-user.target
-[Service]
-Type=idle
-User=<username>
-ExecStart=/usr/bin/python /home/<username>/scripts/telegram/dynamicTelegramBot/squandorDynamicTelBot.py
-[Install]
-WantedBy=multi-user.target
+[Unit]<br>
+Description=Telegram Bot for Domoticz After=multi-user.target<br>
+[Service]<br>
+Type=idle<br>
+User=<username><br>
+ExecStart=/usr/bin/python /home/<username>/scripts/telegram/dynamicTelegramBot/squandorDynamicTelBot.py<br>
+[Install]<br>
+WantedBy=multi-user.target<br>
 <br>
 "sudo chmod 655 /etc/systemd/system/messagebot.service"<br>
 "sudo systemctl daemon-reload"<br>
