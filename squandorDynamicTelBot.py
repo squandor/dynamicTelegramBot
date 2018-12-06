@@ -129,7 +129,7 @@ def on_callback_query(msg):
         markup_dyn = None
         _utility = getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result']
         _utilityTypes = sorted(Counter(x['SubType'].lower() for x in _utility if 'SubType' in x)) + sorted(Counter(x['Type'].lower() for x in _utility if 'Type' in x))
-        _switches = getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result']
+        _switches = getDomoticzUrl(url + '/json.htm?type=devices&filter=switch&used=true')['result']
         _switchTypes = sorted(Counter(x['SubType'].lower() for x in _switches if 'SubType' in x)) + sorted(Counter(x['Type'].lower() for x in _switches if 'Type' in x)) 
         if query_data.lower().split(' ')[2] in _switchTypes:
             _callbackCommand = '/switch ' + query_data.lower().split(' ')[1]+ ' '
