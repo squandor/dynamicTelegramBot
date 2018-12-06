@@ -154,8 +154,23 @@ def on_callback_query(msg):
 
             markup_dyn = InlineKeyboardMarkup(inline_keyboard=[_arr])
         _name, _state = getNameByIDX({'idx': query_data.lower().split(' ')[1], 'type': query_data.lower().split(' ')[2]}, getDomoticzUrl(url + '/json.htm?type=devices&filter=light&used=true')['result'] + getDomoticzUrl(url + '/json.htm?type=scenes')['result'] + getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result'])
-        bot.sendMessage(int(query_data.split(' ')[3]), 'The ' + query_data.lower().split(' ')[2].title() + ' ' + _name + ' is currently  ' + _state + '. What do you want to do?', reply_markup=markup_dyn)
-
+        bot.sendMessage(int(query_data.split(' ')[3]), 'The ' + query_data.lower().split(' ')[2].title() + ' ' + _name + ' is currently  ' + _state + '. What do you want to do?')
+        if _many:
+            counter = 0
+            multipleMark = []
+            for i in _arr:
+                if len(multipleMark) > 3:
+                    bot.sendMessage(int(query_data.split(' ')[3]), '.', reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
+                    multipleMark[:] = []
+                    _send = True
+                else:
+                    multipleMark.append(i)
+                    _send = False
+                counter += 1
+            if _send == False:
+                bot.sendMessage(int(query_data.split(' ')[3]), '.', reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
+        else:
+            bot.sendMessage(int(query_data.split(' ')[3]), '.', reply_markup=markup_dyn)
 
 def handle(msg):
    global url, unames, car_location_idx
@@ -221,7 +236,21 @@ def handle(msg):
                            _arr.append(InlineKeyboardButton(text=i['Name'], callback_data='/suggestion ' + i['idx'] + ' ' + i['type'] + ' ' + str(chat_id)))
 
                        markup_dyn = InlineKeyboardMarkup(inline_keyboard=[_arr])
-                       bot.sendMessage(chat_id, 'Kon het apparaat niet vinden bedoelde je soms een van de onderstaande?', reply_markup=markup_dyn)
+                       bot.sendMessage(chat_id, 'Kon het apparaat niet vinden bedoelde je soms een van de onderstaande?')
+                       if len(_arr) > 3:
+                           counter = 0
+                           multipleMark = []
+                           for i in _arr:
+                               if len(multipleMark) == 3:
+                                   bot.sendMessage(chat_id, '>', reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
+                                   multipleMark[:] = []
+                                   send = True
+                               else:
+                                   multipleMark.append(i)
+                           if send == False:
+                               bot.sendMessage(chat_id, '>', reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
+                       else:
+                           bot.sendMessage(chat_id, '>', reply_markup=markup_dyn)
                    else:
                        bot.sendMessage(chat_id, 'Kon het apparaat niet vinden')
        if run:
