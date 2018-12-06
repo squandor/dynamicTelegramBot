@@ -157,23 +157,23 @@ def on_callback_query(msg):
             if len(_arr) > 3:
                 _many = True
         _name, _state = getNameByIDX({'idx': query_data.lower().split(' ')[1], 'type': query_data.lower().split(' ')[2]}, getDomoticzUrl(url + '/json.htm?type=devices&filter=light&used=true')['result'] + getDomoticzUrl(url + '/json.htm?type=scenes')['result'] + getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result'])
-        bot.sendMessage(int(query_data.split(' ')[3]), 'The ' + query_data.lower().split(' ')[2].title() + ' ' + _name + ' is currently  ' + _state + '. What do you want to do?')
         if _many:
+            bot.sendMessage(int(query_data.split(' ')[3]), 'The ' + query_data.lower().split(' ')[2].title() + ' ' + _name + ' is currently  ' + _state + '. What do you want to do?')
             counter = 0
             multipleMark = []
             for i in _arr:
                 if len(multipleMark) > 3:
-                    bot.sendMessage(int(query_data.split(' ')[3]), '.', reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
+                    bot.sendMessage(int(query_data.split(' ')[3]), 'Page ' + str(counter), reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
                     multipleMark[:] = []
                     _send = True
+                    counter += 1
                 else:
                     multipleMark.append(i)
                     _send = False
-                counter += 1
             if _send == False:
-                bot.sendMessage(int(query_data.split(' ')[3]), '.', reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
+                bot.sendMessage(int(query_data.split(' ')[3]), 'Page ' + str(counter), reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
         else:
-            bot.sendMessage(int(query_data.split(' ')[3]), '.', reply_markup=markup_dyn)
+            bot.sendMessage(int(query_data.split(' ')[3]), 'The ' + query_data.lower().split(' ')[2].title() + ' ' + _name + ' is currently  ' + _state + '. What do you want to do?', reply_markup=markup_dyn)
 
 def handle(msg):
    global url, unames, car_location_idx
@@ -245,15 +245,16 @@ def handle(msg):
                            multipleMark = []
                            for i in _arr:
                                if len(multipleMark) == 3:
-                                   bot.sendMessage(chat_id, '>', reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
+                                   bot.sendMessage(chat_id, 'Page ' + str(counter), reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
                                    multipleMark[:] = []
                                    send = True
+                                   counter += 1
                                else:
                                    multipleMark.append(i)
                            if send == False:
-                               bot.sendMessage(chat_id, '>', reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
+                               bot.sendMessage(chat_id, 'Page ' + str(counter), reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
                        else:
-                           bot.sendMessage(chat_id, '>', reply_markup=markup_dyn)
+                           bot.sendMessage(chat_id, 'Page 0', reply_markup=markup_dyn)
                    else:
                        bot.sendMessage(chat_id, 'Kon het apparaat niet vinden')
        if run:
