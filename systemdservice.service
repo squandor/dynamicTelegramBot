@@ -1,0 +1,10 @@
+[Unit]
+Description=Telegram Bot for Domoticz After=multi-user.target
+
+[Service]
+Type=idle
+User=<username>
+ExecStart=/usr/bin/python /home/<username>/scripts/telegram/dynamicTelegramBot/squandorDynamicTelBot.py
+
+[Install]
+WantedBy=multi-user.target
