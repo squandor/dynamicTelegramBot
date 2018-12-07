@@ -15,12 +15,13 @@ from telepot.loop import MessageLoop
 from telepot.namedtuple import ReplyKeyboardMarkup
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from collections import Counter
+import telbotConfig as config
 
 ########### Config ###############
-url = 'http://<domoticz_ip>:8080'
-bot_token = '<botToken>'
-unames = ['', ''] ## usernames which can use the bot in telegram
-car_location_idx = '111' #lat,long
+url = config.url
+bot_token = config.bot_token
+unames = config.unames
+car_location_idx = config.car_location_idx
 ##################################
 def getRandom():
    return randint(0, 9)
