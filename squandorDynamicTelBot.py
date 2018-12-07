@@ -10,18 +10,34 @@ import urllib3
 import json
 import re
 import base64
+import configparser as ConfigParser
 from random import randint
 from telepot.loop import MessageLoop
 from telepot.namedtuple import ReplyKeyboardMarkup
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from collections import Counter
-import telbotConfig as config
 
 ########### Config ###############
-url = config.url
-bot_token = config.bot_token
-unames = config.unames
-car_location_idx = config.car_location_idx
+Config = ConfigParser.ConfigParser()
+if os.path.isfile('config.ini'):
+    Config.read('config.ini')
+    url = Config.get('config', 'url')
+    bot_token = Config.get('config', 'bot_token')
+    unames = Config.get('config', 'unames').split(',')
+    car_location_idx = Config.get('config', 'car_location_idx')
+else:
+    Config.add_section('config')
+    Config.set('config','url', input('Url (http://0.0.0.0:8080): '))
+    Config.set('config','bot_token',input('Bot token: '))
+    Config.set('config','unames',input('Usernames (user1, user2, user3): '))
+    Config.set('config','car_location_idx',input('car_location_idx: '))
+    url = Config.get('config', 'url')
+    bot_token = Config.get('config', 'bot_token')
+    unames = Config.get('config', 'unames').split(',')
+    car_location_idx = Config.get('config', 'car_location_idx')
+    cfgfile = open("config.ini",'w')
+    Config.write(cfgfile)
+    cfgfile.close()
 ##################################
 
 
