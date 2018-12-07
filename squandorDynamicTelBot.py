@@ -255,6 +255,7 @@ def handle(msg):
                                    counter += 1
                                else:
                                    multipleMark.append(i)
+                                   send = False
                            if send == False:
                                bot.sendMessage(chat_id, 'Page ' + str(counter), reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
                        else:
