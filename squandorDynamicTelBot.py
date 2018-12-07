@@ -105,18 +105,18 @@ def on_callback_query(msg):
         runUrl = url + '/json.htm?type=command&param=switchlight&idx=' + query_data.lower().split(' ')[1] + '&switchcmd=' + query_data.lower().split(' ')[2].title().replace('Level=', 'level=').strip()
         _res = getDomoticzUrl(runUrl)
         if _res['status'].lower() == 'ok':
-            bot_text = 'Commando uitgevoert'
+            bot_text = 'Command executed'
         else:
-            bot_text = 'Er ging iets mis met het uitvoeren: ' + runUrl
+            bot_text = 'Running failed: ' + runUrl
         bot.answerCallbackQuery(query_id, text=bot_text)
     elif query_data.lower().split(' ')[0] == '/group':
         bot_text = ''
         runUrl = url + '/json.htm?type=command&param=switchscene&idx=' + query_data.lower().split(' ')[1] + '&switchcmd=' + query_data.lower().split(' ')[2].title().replace('Level=', 'level=').strip()
         _res = getDomoticzUrl(runUrl)
         if _res['status'].lower() == 'ok':
-            bot_text = 'Commando uitgevoert'
+            bot_text = 'Command executed'
         else:
-            bot_text = 'Er ging iets mis met het uitvoeren: ' + runUrl
+            bot_text = 'Running failed: ' + runUrl
         bot.answerCallbackQuery(query_id, text=bot_text)
     elif query_data.lower().split(' ')[0] == '/utility':
         bot_text = ''
@@ -125,7 +125,7 @@ def on_callback_query(msg):
         if _res['status'].lower() == 'ok':
             bot_text = 'Commando uitgevoert'
         else:
-            bot_text = 'Er ging iets mis met het uitvoeren: ' + runUrl
+            bot_text = 'Running failed: ' + runUrl
 
         bot.answerCallbackQuery(query_id, text=_res['result'][0]['Data'])
     elif query_data.lower().split(' ')[0] == '/suggestion':
@@ -243,7 +243,7 @@ def handle(msg):
                            _arr.append(InlineKeyboardButton(text=i['Name'], callback_data='/suggestion ' + i['idx'] + ' ' + i['type'] + ' ' + str(chat_id)))
 
                        markup_dyn = InlineKeyboardMarkup(inline_keyboard=[_arr])
-                       bot.sendMessage(chat_id, 'Kon het apparaat niet vinden bedoelde je soms een van de onderstaande?')
+                       bot.sendMessage(chat_id, 'Could not find the device, did you mean any of these devices?')
                        if len(_arr) > 3:
                            counter = 0
                            multipleMark = []
@@ -261,7 +261,7 @@ def handle(msg):
                        else:
                            bot.sendMessage(chat_id, 'Page 0', reply_markup=markup_dyn)
                    else:
-                       bot.sendMessage(chat_id, 'Kon het apparaat niet vinden')
+                       bot.sendMessage(chat_id, 'Device not found')
        if run:
            getDomoticzUrl(url)
 
