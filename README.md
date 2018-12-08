@@ -40,8 +40,8 @@ Description=Telegram Bot for Domoticz After=multi-user.target<br>
 [Service]<br>
 Type=idle<br>
 User=<username><br>
-ExecStart=/usr/bin/python /home/<username>/scripts/telegram/dynamicTelegramBot/squandorDynamicTelBot.py<br>
-WorkingDirectory=/home/<username>/scripts/telegram/dynamicTelegramBot/<br>
+ExecStart=/usr/bin/python /home/username/scripts/telegram/dynamicTelegramBot/squandorDynamicTelBot.py<br>
+WorkingDirectory=/home/username/scripts/telegram/dynamicTelegramBot/<br>
 [Install]<br>
 WantedBy=multi-user.target<br>
 <br>
