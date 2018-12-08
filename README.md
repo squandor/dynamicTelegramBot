@@ -21,12 +21,12 @@ If you type livingroomspeaker to the bot it will come with the switch and asks y
 but if you type living the bot will make an suggestions and asks if you meant one of the following devices and comes with livingroomSpeaker and livingroomLights. 
 
 # First run
-On the first run it will ask you some information:
+You need to start the bot manually for the first time because it will ask you for information to create an config:
 - url: <domoticz_url> (http://192.168.1.2:8080)
 - bot_token
 - unames (usernames seperated by an comma): user1, user2, user3
 - car_location_idx: can be an idx number of an text utility which as the lat,long in it.
-after that an config.ini will be created and it will run.
+after that an config.ini will be created and it can be run from the systemd service.
 
 # Systemd script
 Thanks to so help someone made an easy service file so you can easy run the bot using the systemd service. 
