@@ -183,7 +183,7 @@ def on_callback_query(msg):
             counter = 0
             multipleMark = []
             for i in _arr:
-                if len(multipleMark) > 3:
+                if len(multipleMark) == 3:
                     bot.sendMessage(int(query_data.split(' ')[3]), 'Page ' + str(counter), reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
                     multipleMark[:] = []
                     _send = True
