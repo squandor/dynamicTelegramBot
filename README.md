@@ -7,7 +7,7 @@ unames = ['username1', 'username2']
 by using this the bot will only react to the users which are in the array.
 
 # What can it do?
-Using this bot you can ask him for an switch/scene/group/utility switch. 
+Using this bot you can ask him for an switch/scene/group/temperature/utility switch. 
 After the bot found the device it will ask you what you want to do with it (on,off)
 
 If the device is an selector switch the bot will build special keyboard in telegram where you can find you're selector options from domoticz. 
