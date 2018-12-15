@@ -1,4 +1,4 @@
-## Created by Squandor v0.1
+## Created by Squandor v0.2
 import os
 import sys
 import time
@@ -141,15 +141,25 @@ def on_callback_query(msg):
             bot_text = 'Command executed'
         else:
             bot_text = 'Running failed: ' + runUrl
-
+        bot.answerCallbackQuery(query_id, text=_res['result'][0]['Data'])
+    elif query_data.lower().split(' ')[0] == '/temp':
+        bot_text = ''
+        runUrl = url + '/json.htm?type=devices&rid=' + query_data.lower().split(' ')[1]
+        _res = getDomoticzUrl(runUrl)
+        if _res['status'].lower() == 'ok':
+            bot_text = 'Command executed'
+        else:
+            bot_text = 'Running failed: ' + runUrl
         bot.answerCallbackQuery(query_id, text=_res['result'][0]['Data'])
     elif query_data.lower().split(' ')[0] == '/suggestion':
         markup_dyn = None
         _many = False
         _utility = getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result']
         _utilityTypes = sorted(Counter(x['SubType'].lower() for x in _utility if 'SubType' in x)) + sorted(Counter(x['Type'].lower() for x in _utility if 'Type' in x))
+        _temps = getDomoticzUrl(url + '/json.htm?type=devices&filter=temp&used=true')['result']
+        _tempTypes = sorted(Counter(x['SubType'].lower() for x in _temps if 'SubType' in x)) + sorted(Counter(x['Type'].lower() for x in _temps if 'Type' in x))
         _switches = getDomoticzUrl(url + '/json.htm?type=devices&filter=switch&used=true')['result']
-        _switchTypes = sorted(Counter(x['SubType'].lower() for x in _switches if 'SubType' in x)) + sorted(Counter(x['Type'].lower() for x in _switches if 'Type' in x)) 
+        _switchTypes = sorted(Counter(x['SubType'].lower() for x in _switches if 'SubType' in x)) + sorted(Counter(x['Type'].lower() for x in _switches if 'Type' in x))
         if query_data.lower().split(' ')[2] in _switchTypes:
             _callbackCommand = '/switch ' + query_data.lower().split(' ')[1]+ ' '
             markup_dyn = InlineKeyboardMarkup(inline_keyboard=[
@@ -160,6 +170,9 @@ def on_callback_query(msg):
             markup_dyn = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='On', callback_data=_callbackCommand + 'on'), InlineKeyboardButton(text='Off', callback_data=_callbackCommand + 'off')],
             ])
+        elif query_data.lower().split(' ')[2] in _tempTypes:
+            _callbackCommand = '/temp ' + query_data.lower().split(' ')[1]+ ' '
+            markup_dyn = None
         elif query_data.lower().split(' ')[2] in _utilityTypes:
             _callbackCommand = '/utility ' + query_data.lower().split(' ')[1]+ ' '
             markup_dyn = None
@@ -174,7 +187,7 @@ def on_callback_query(msg):
             markup_dyn = InlineKeyboardMarkup(inline_keyboard=[_arr])
             if len(_arr) > 3:
                 _many = True
-        _name, _state = getNameByIDX({'idx': query_data.lower().split(' ')[1], 'type': query_data.lower().split(' ')[2]}, getDomoticzUrl(url + '/json.htm?type=devices&filter=light&used=true')['result'] + getDomoticzUrl(url + '/json.htm?type=scenes')['result'] + getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result'])
+        _name, _state = getNameByIDX({'idx': query_data.lower().split(' ')[1], 'type': query_data.lower().split(' ')[2]}, getDomoticzUrl(url + '/json.htm?type=devices&filter=light&used=true')['result'] + getDomoticzUrl(url + '/json.htm?type=scenes')['result'] + getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result'] + getDomoticzUrl(url + '/json.htm?type=devices&filter=temp&used=true')['result'])
         if _many:
             bot.sendMessage(int(query_data.split(' ')[3]), 'The ' + query_data.lower().split(' ')[2].title() + ' ' + _name + ' is currently  ' + _state + '. What do you want to do?')
             counter = 0
@@ -220,10 +233,12 @@ def handle(msg):
            if command.lower() != '':
                _switches = getDomoticzUrl(url + '/json.htm?type=command&param=getlightswitches')['result']
                _groups = getDomoticzUrl(url + '/json.htm?type=scenes')['result']
-
+               _temps = getDomoticzUrl(url + '/json.htm?type=devices&filter=temp&used=true')['result']
                _utility = getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result']
                _utilityTypes = sorted(Counter(x['SubType'].lower() for x in _utility if 'SubType' in x)) + sorted(Counter(x['Type'].lower() for x in _utility if 'Type' in x))
-               _devices = _switches + _groups + _utility
+               _tempTypes = sorted(Counter(x['SubType'].lower() for x in _temps if 'SubType' in x)) + sorted(Counter(x['Type'].lower() for x in _temps if 'Type' in x))
+
+               _devices = _switches + _groups + _utility + _temps
                _idx = getIDXByName(command.lower(), _devices)
                if _idx['idx'] != '':
                    if _idx['type'].lower() == 'switch' or _idx['type'].lower() == 'x10':
@@ -231,10 +246,15 @@ def handle(msg):
                        markup_dyn = InlineKeyboardMarkup(inline_keyboard=[
                        [InlineKeyboardButton(text='On', callback_data=_callbackCommand + 'on'), InlineKeyboardButton(text='Off', callback_data=_callbackCommand + 'off')],
                        ])
-                   if _idx['type'].lower() == 'scene' or _idx['type'].lower() == 'group':
+                   elif _idx['type'].lower() == 'scene' or _idx['type'].lower() == 'group':
                        _callbackCommand = '/group ' + _idx['idx'] + ' '
                        markup_dyn = InlineKeyboardMarkup(inline_keyboard=[
                        [InlineKeyboardButton(text='On', callback_data=_callbackCommand + 'on'), InlineKeyboardButton(text='Off', callback_data=_callbackCommand + 'off')],
+                       ])
+                   elif _idx['type'].lower() in _tempTypes:
+                       _callbackCommand = '/temp ' + _idx['idx'] + ' '
+                       markup_dyn = InlineKeyboardMarkup(inline_keyboard=[
+                       [InlineKeyboardButton(text='Show status', callback_data=_callbackCommand + 'status')],
                        ])
                    elif _idx['type'].lower() == 'selector_switch':
                        _arr = []
