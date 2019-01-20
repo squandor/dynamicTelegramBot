@@ -1,4 +1,4 @@
-## Created by Squandor v0.2 for python3
+## Created by Squandor v0.3 for python3
 import os
 import sys
 import time
