@@ -206,7 +206,7 @@ def on_callback_query(msg):
             if _send == False:
                 bot.sendMessage(int(query_data.split(' ')[3]), 'Page ' + str(counter), reply_markup=InlineKeyboardMarkup(inline_keyboard=[multipleMark]))
         else:
-            bot.sendMessage(int(query_data.split(' ')[3]), 'The ' + query_data.lower().split(' ')[2].title() + ' ' + _name + ' is currently  ' + _state + '. What do you want to do?', reply_markup=markup_dyn)
+            bot.sendMessage(int(query_data.split(' ')[3]), 'The device' + ' ' + _name + ' is currently  ' + _state + '. What do you want to do?', reply_markup=markup_dyn)
 
 def handle(msg):
    global url, unames, car_location_idx
