@@ -189,7 +189,7 @@ def on_callback_query(msg):
                 _many = True
         _name, _state = getNameByIDX({'idx': query_data.lower().split(' ')[1], 'type': query_data.lower().split(' ')[2]}, getDomoticzUrl(url + '/json.htm?type=devices&filter=light&used=true')['result'] + getDomoticzUrl(url + '/json.htm?type=scenes')['result'] + getDomoticzUrl(url + '/json.htm?type=devices&filter=utility&used=true')['result'] + getDomoticzUrl(url + '/json.htm?type=devices&filter=temp&used=true')['result'])
         if _many:
-            bot.sendMessage(int(query_data.split(' ')[3]), 'The ' + query_data.lower().split(' ')[2].title() + ' ' + _name + ' is currently  ' + _state + '. What do you want to do?')
+            bot.sendMessage(int(query_data.split(' ')[3]), 'The device' + ' ' + _name + ' is currently  ' + _state + '. What do you want to do?')
             counter = 0
             multipleMark = []
             for i in _arr:
